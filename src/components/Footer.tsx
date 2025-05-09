@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom';
-import { Facebook, Instagram, Linkedin, Youtube, Mail, Phone, MapPin, WhatsApp } from 'lucide-react';
+import { Facebook, Instagram, Linkedin, Youtube, Mail, Phone, MapPin, MessageSquare } from 'lucide-react';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -80,7 +80,7 @@ const Footer = () => {
                 <a href="mailto:info@chetnaacademy.com" className="text-muted-foreground hover:text-primary transition-colors">info@chetnaacademy.com</a>
               </li>
               <li className="flex items-center">
-                <WhatsApp className="h-5 w-5 mr-2 text-primary" />
+                <MessageSquare className="h-5 w-5 mr-2 text-primary" />
                 <a href="https://wa.me/919876543210" className="text-muted-foreground hover:text-primary transition-colors">WhatsApp Us</a>
               </li>
             </ul>

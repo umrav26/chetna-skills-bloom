@@ -2,7 +2,7 @@
 import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { WhatsApp, Mail } from 'lucide-react';
+import { MessageSquare, Mail } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 const Newsletter = () => {
@@ -64,7 +64,7 @@ const Newsletter = () => {
                   rel="noopener noreferrer"
                   className="flex items-center p-4 border rounded-lg hover:bg-accent/10 transition-colors"
                 >
-                  <WhatsApp className="h-5 w-5 mr-3 text-green-600" />
+                  <MessageSquare className="h-5 w-5 mr-3 text-green-600" />
                   <div>
                     <div className="font-medium">WhatsApp Us</div>
                     <div className="text-sm text-muted-foreground">Quick responses within hours</div>
