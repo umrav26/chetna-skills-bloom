@@ -3,8 +3,20 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import SectionTitle from '../SectionTitle';
-import CourseCard, { CourseProps } from '../CourseCard';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, Calendar, Award } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+
+export interface CourseProps {
+  id: string;
+  title: string;
+  category: string;
+  duration: string;
+  level: string;
+  languages: string[];
+  skills: string[];
+  fee: string;
+}
 
 const featuredCourses: CourseProps[] = [
   {
@@ -50,8 +62,6 @@ const featuredCourses: CourseProps[] = [
 ];
 
 const FeaturedCourses = () => {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-
   return (
     <section className="section-padding bg-muted/30">
       <div className="container">
@@ -63,15 +73,51 @@ const FeaturedCourses = () => {
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {featuredCourses.map((course, index) => (
-            <div 
-              key={course.id}
-              className="animate-slide-in-bottom"
+            <Card 
+              key={course.id} 
+              className="overflow-hidden card-hover animate-slide-in-bottom" 
               style={{ animationDelay: `${0.1 * index}s` }}
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
             >
-              <CourseCard {...course} />
-            </div>
+              <CardContent className="p-0">
+                <div className="p-4 border-b">
+                  <div className="flex justify-between items-start mb-3">
+                    <Badge variant="outline" className={`
+                      ${course.category === 'Tech' ? 'bg-blue-50 text-blue-600 border-blue-200' : 
+                        course.category === 'Soft Skills' ? 'bg-green-50 text-green-600 border-green-200' : 
+                        'bg-yellow-50 text-yellow-600 border-yellow-200'}
+                    `}>
+                      {course.category}
+                    </Badge>
+                    <Badge variant="outline" className="bg-primary/5 text-primary">
+                      ₹{course.fee}
+                    </Badge>
+                  </div>
+                  
+                  <h3 className="font-medium text-lg mb-3">{course.title}</h3>
+                  
+                  <div className="space-y-2 text-muted-foreground">
+                    <div className="flex items-center">
+                      <Calendar className="h-4 w-4 mr-2" />
+                      <span>{course.duration}</span>
+                    </div>
+                    <div className="flex items-center">
+                      <Award className="h-4 w-4 mr-2" />
+                      <span>{course.level}</span>
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="p-4 bg-background">
+                  <Link 
+                    to={`/courses/${course.id}`}
+                    className="inline-flex items-center text-primary hover:text-primary/80 font-medium"
+                  >
+                    View Details
+                    <ArrowRight className="h-4 w-4 ml-2" />
+                  </Link>
+                </div>
+              </CardContent>
+            </Card>
           ))}
         </div>
         
