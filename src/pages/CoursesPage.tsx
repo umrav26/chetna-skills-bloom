@@ -29,6 +29,26 @@ interface Course {
   skills: string[];
 }
 
+// Helper function for category label
+const getCategoryLabel = (category: CourseCategory): string => {
+  switch(category) {
+    case 'tech': return 'Tech Skills';
+    case 'soft': return 'Soft Skills';
+    case 'foundational': return 'Foundational';
+    default: return 'Unknown';
+  }
+};
+
+// Helper function for level badge color
+const getLevelBadgeVariant = (level: CourseLevel): "default" | "secondary" | "outline" => {
+  switch(level) {
+    case 'beginner': return 'outline';
+    case 'intermediate': return 'secondary';
+    case 'advanced': return 'default';
+    default: return 'outline';
+  }
+};
+
 const CoursesPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState<string>('all');
