@@ -25,8 +25,8 @@ const formSchema = z.object({
   address: z.string().min(5, { message: "Address must be at least 5 characters" }),
   education: z.string().min(1, { message: "Please select your education level" }),
   message: z.string().optional(),
-  agreeToTerms: z.literal(true, {
-    errorMap: () => ({ message: "You must agree to the terms and conditions" }),
+  agreeToTerms: z.boolean().refine(val => val === true, {
+    message: "You must agree to the terms and conditions"
   }),
 });
 
@@ -61,7 +61,7 @@ const ApplyNowPage = () => {
       address: "",
       education: "",
       message: "",
-      agreeToTerms: false,
+      agreeToTerms: false, // This is fine now with our updated schema
     },
   });
 
