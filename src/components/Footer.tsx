@@ -16,7 +16,7 @@ const Footer = () => {
               <span className="font-heading text-xl font-bold">Academy</span>
             </Link>
             <p className="text-muted-foreground">
-              Empowering youth across India with practical skills through affordable, hands-on training and mentorship.
+              Soon empowering youth across India with practical skills through affordable, hands-on training and mentorship.
             </p>
             <div className="flex space-x-3">
               <a href="#" className="text-foreground/70 hover:text-primary transition-colors">
@@ -43,17 +43,17 @@ const Footer = () => {
             <h3 className="font-heading font-semibold text-lg">Quick Links</h3>
             <ul className="space-y-2">
               <li><Link to="/about" className="text-muted-foreground hover:text-primary transition-colors">About Us</Link></li>
-              <li><Link to="/courses" className="text-muted-foreground hover:text-primary transition-colors">Courses</Link></li>
-              <li><Link to="/workshops" className="text-muted-foreground hover:text-primary transition-colors">Workshops</Link></li>
+              <li><Link to="/courses" className="text-muted-foreground hover:text-primary transition-colors">Planned Courses</Link></li>
+              <li><Link to="/workshops" className="text-muted-foreground hover:text-primary transition-colors">Future Workshops</Link></li>
               <li><Link to="/join-trainer" className="text-muted-foreground hover:text-primary transition-colors">Join as Trainer</Link></li>
-              <li><Link to="/success-stories" className="text-muted-foreground hover:text-primary transition-colors">Success Stories</Link></li>
+              <li><Link to="/success-stories" className="text-muted-foreground hover:text-primary transition-colors">Vision</Link></li>
               <li><Link to="/contact" className="text-muted-foreground hover:text-primary transition-colors">Contact Us</Link></li>
             </ul>
           </div>
 
           {/* Column 3 - Courses */}
           <div className="space-y-4">
-            <h3 className="font-heading font-semibold text-lg">Top Courses</h3>
+            <h3 className="font-heading font-semibold text-lg">Upcoming Courses</h3>
             <ul className="space-y-2">
               <li><Link to="/courses/tech" className="text-muted-foreground hover:text-primary transition-colors">Web Development</Link></li>
               <li><Link to="/courses/tech" className="text-muted-foreground hover:text-primary transition-colors">Digital Marketing</Link></li>
@@ -69,7 +69,7 @@ const Footer = () => {
             <ul className="space-y-3">
               <li className="flex items-start">
                 <MapPin className="h-5 w-5 mr-2 shrink-0 text-primary" />
-                <span className="text-muted-foreground">Kokrajhar, Assam, India</span>
+                <span className="text-muted-foreground">Kokrajhar, Assam, India (Coming Soon)</span>
               </li>
               <li className="flex items-center">
                 <Phone className="h-5 w-5 mr-2 text-primary" />
@@ -90,7 +90,7 @@ const Footer = () => {
         <div className="mt-12 pt-6 border-t border-muted-foreground/20">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-sm text-muted-foreground">
-              &copy; {currentYear} Chetna Academy. All rights reserved.
+              &copy; {currentYear} Chetna Academy (Coming Soon). All rights reserved.
             </p>
             <div className="flex space-x-4 text-sm text-muted-foreground">
               <Link to="/privacy" className="hover:text-primary transition-colors">Privacy Policy</Link>

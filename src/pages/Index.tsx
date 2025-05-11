@@ -13,7 +13,6 @@ const Index = () => {
       <Hero />
       <Mission />
       <FeaturedCourses />
-      <Testimonials />
       <Workshops />
       <Newsletter />
     </Layout>

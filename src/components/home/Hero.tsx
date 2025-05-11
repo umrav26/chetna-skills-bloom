@@ -14,23 +14,23 @@ const Hero = () => {
       
       <div className="container relative section-padding min-h-[85vh] flex flex-col items-center justify-center text-center">
         <h1 className="heading-xl mb-6 animate-fade-in max-w-4xl">
-          <span className="gradient-text">Practical Skills. Real Careers.</span>
+          <span className="gradient-text">Coming Soon: Practical Skills. Real Careers.</span>
           <br />Rural to Global.
         </h1>
         
         <p className="text-xl md:text-2xl text-muted-foreground mb-8 max-w-2xl animate-fade-in" style={{ animationDelay: '0.2s' }}>
-          Empowering youth across India with hands-on training and mentorship in tech and soft skills.
+          We're preparing to empower youth across India with hands-on training and mentorship in tech and soft skills. Be among the first to join.
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 animate-fade-in" style={{ animationDelay: '0.4s' }}>
           <Button asChild size="lg" className="text-base px-6">
             <Link to="/courses">
-              Explore Courses
+              Preview Courses
               <ArrowRight className="ml-2 h-5 w-5" />
             </Link>
           </Button>
           <Button asChild size="lg" variant="outline" className="text-base px-6">
-            <Link to="/apply">Apply Now</Link>
+            <Link to="/apply">Join Waitlist</Link>
           </Button>
         </div>
 
@@ -39,17 +39,17 @@ const Hero = () => {
             <div className="flex items-center gap-4 text-sm">
               <span className="flex items-center">
                 <span className="w-2 h-2 bg-green-500 rounded-full mr-2"></span>
-                <span>5000+ Students</span>
+                <span>Launching Soon</span>
               </span>
               <span className="w-px h-4 bg-gray-300"></span>
               <span className="flex items-center">
                 <span className="w-2 h-2 bg-blue-500 rounded-full mr-2"></span>
-                <span>10+ Courses</span>
+                <span>10+ Courses Planned</span>
               </span>
               <span className="w-px h-4 bg-gray-300"></span>
               <span className="flex items-center">
                 <span className="w-2 h-2 bg-amber-500 rounded-full mr-2"></span>
-                <span>Industry Recognized</span>
+                <span>Industry Partnerships</span>
               </span>
             </div>
           </div>

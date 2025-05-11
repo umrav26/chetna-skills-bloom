@@ -70,8 +70,8 @@ const ApplyNowPage = () => {
     
     // Simulate form submission
     setTimeout(() => {
-      toast.success("Application submitted successfully!", {
-        description: `Thank you ${data.fullName}, we'll get back to you shortly.`,
+      toast.success("Waitlist submission received!", {
+        description: `Thank you ${data.fullName}, we'll notify you when we launch.`,
       });
       setIsSubmitting(false);
       navigate("/");
@@ -83,8 +83,8 @@ const ApplyNowPage = () => {
       <div className="bg-gradient-to-b from-muted/50 to-background pt-24 pb-12">
         <div className="container">
           <SectionTitle
-            title="Apply Now"
-            subtitle="Take the first step towards your skill development journey"
+            title="Join Waitlist"
+            subtitle="Get early access when we launch our skill development programs"
             centered
           />
         </div>
@@ -96,6 +96,8 @@ const ApplyNowPage = () => {
             <div className="lg:col-span-8 lg:col-start-3">
               <Card className="border shadow-sm">
                 <CardContent className="p-6 md:p-8">
+                  <p className="text-muted-foreground mb-6">Chetna Academy is coming soon! Join our waitlist to be notified when we launch and get priority access to our courses.</p>
+                  
                   <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

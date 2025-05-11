@@ -26,7 +26,7 @@ const Header: React.FC = () => {
     { name: 'About Us', path: '/about' },
     { name: 'Workshops', path: '/workshops' },
     { name: 'Join as Trainer', path: '/join-trainer' },
-    { name: 'Success Stories', path: '/success-stories' },
+    { name: 'Vision', path: '/success-stories' },
     { name: 'Contact', path: '/contact' },
   ];
 
@@ -87,10 +87,10 @@ const Header: React.FC = () => {
 
         <div className="hidden md:flex items-center space-x-3">
           <Button asChild variant="outline">
-            <Link to="/apply">Apply Now</Link>
+            <Link to="/apply">Join Waitlist</Link>
           </Button>
           <Button asChild>
-            <Link to="/courses">Explore Courses</Link>
+            <Link to="/courses">Preview Courses</Link>
           </Button>
         </div>
 
@@ -147,10 +147,10 @@ const Header: React.FC = () => {
             ))}
             <div className="flex flex-col space-y-3 pt-4">
               <Button asChild variant="outline" className="w-full">
-                <Link to="/apply" onClick={toggleMenu}>Apply Now</Link>
+                <Link to="/apply" onClick={toggleMenu}>Join Waitlist</Link>
               </Button>
               <Button asChild className="w-full">
-                <Link to="/courses" onClick={toggleMenu}>Explore Courses</Link>
+                <Link to="/courses" onClick={toggleMenu}>Preview Courses</Link>
               </Button>
             </div>
           </div>
