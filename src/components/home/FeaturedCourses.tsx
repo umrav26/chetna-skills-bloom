@@ -20,44 +20,44 @@ export interface CourseProps {
 
 const featuredCourses: CourseProps[] = [
   {
-    id: 'web-development',
-    title: 'Web Development',
+    id: 'full-stack-development',
+    title: 'Full Stack Development',
     category: 'Tech',
-    duration: '6 months',
-    level: 'Beginner to Intermediate',
+    duration: '3-9 months',
+    level: 'Beginner to Advanced',
     languages: ['English', 'Hindi'],
-    skills: ['HTML/CSS', 'JavaScript', 'React', 'Node.js'],
-    fee: '15,000'
+    skills: ['HTML/CSS', 'JavaScript', 'React', 'Node.js', 'GitHub'],
+    fee: '6,000 - 13,000'
   },
   {
     id: 'digital-marketing',
     title: 'Digital Marketing',
     category: 'Tech',
-    duration: '3 months',
-    level: 'Beginner',
+    duration: '3-9 months',
+    level: 'Beginner to Intermediate',
     languages: ['English', 'Hindi', 'Assamese'],
     skills: ['SEO', 'Social Media', 'Content Marketing', 'Analytics'],
-    fee: '12,000'
+    fee: '6,000 - 13,000'
   },
   {
     id: 'communication-skills',
     title: 'Communication Skills',
     category: 'Soft Skills',
-    duration: '2 months',
+    duration: '1.5-3 months',
     level: 'All Levels',
     languages: ['English', 'Hindi', 'Assamese', 'Bodo'],
-    skills: ['Public Speaking', 'Business Writing', 'Presentation', 'Interview Skills'],
-    fee: '8,000'
+    skills: ['Public Speaking', 'Business Writing', 'Presentation', 'Collaboration'],
+    fee: '3,500 - 6,000'
   },
   {
-    id: 'graphic-design',
-    title: 'Graphic Design',
+    id: 'ui-ux-design',
+    title: 'UI/UX Design',
     category: 'Tech',
-    duration: '4 months',
+    duration: '3-6 months',
     level: 'Beginner to Intermediate',
     languages: ['English', 'Hindi'],
-    skills: ['Photoshop', 'Illustrator', 'UI/UX', 'Branding'],
-    fee: '14,000'
+    skills: ['Wireframing', 'Figma', 'User Research', 'Prototyping'],
+    fee: '6,000 - 10,000'
   }
 ];
 
@@ -66,7 +66,7 @@ const FeaturedCourses = () => {
     <section className="section-padding bg-muted/30">
       <div className="container">
         <SectionTitle 
-          title="Featured Courses"
+          title="Featured Courses (Coming Soon)"
           subtitle="Discover our most popular skill development programs designed to make you industry-ready."
           centered
         />
