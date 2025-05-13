@@ -41,8 +41,7 @@ const Header: React.FC = () => {
     <header className="sticky top-0 z-40 w-full bg-white/80 backdrop-blur-md shadow-sm">
       <div className="container flex h-16 items-center justify-between">
         <Link to="/" className="flex items-center space-x-2">
-          <span className="font-heading text-xl font-bold text-primary">Chetna</span>
-          <span className="font-heading text-xl font-bold">Academy</span>
+          <img src="/lovable-uploads/540b532e-034d-4136-a9b1-f88ed6fe9028.png" alt="Chetna Academy" className="h-10" />
         </Link>
 
         {/* Desktop Navigation */}
