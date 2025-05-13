@@ -1,3 +1,4 @@
+
 import Layout from '../components/Layout';
 import SectionTitle from '../components/SectionTitle';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
@@ -125,7 +126,8 @@ const SuccessStoriesPage = () => {
         return 'outline';
     }
   };
-  return <Layout>
+  return (
+    <Layout>
       {/* Hero Section */}
       
 
@@ -143,7 +145,8 @@ const SuccessStoriesPage = () => {
 
       {/* CTA Section */}
       
-    </Layout>;
+    </Layout>
+  );
 };
 
 // Story Card Component
