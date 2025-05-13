@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import AdminLayout from '@/components/admin/AdminLayout';
@@ -39,7 +38,13 @@ const AdminCoursesPage = () => {
 
       if (error) throw error;
 
-      setCourses(data || []);
+      // Cast the status field to the correct type
+      const typedData = data?.map(course => ({
+        ...course,
+        status: course.status as 'draft' | 'published'
+      })) || [];
+
+      setCourses(typedData);
     } catch (error) {
       console.error('Error fetching courses:', error);
       toast({

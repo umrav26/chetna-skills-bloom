@@ -36,7 +36,15 @@ const AdminWaitlistPage = () => {
 
       if (error) throw error;
 
-      setEntries(data || []);
+      // Cast the status field to the correct type
+      const typedData = data?.map(entry => ({
+        ...entry,
+        name: entry.name || '',
+        interest: entry.interest || '',
+        status: entry.status as 'pending' | 'contacted' | 'not-interested'
+      })) || [];
+
+      setEntries(typedData);
     } catch (error) {
       console.error('Error fetching waitlist:', error);
       toast({

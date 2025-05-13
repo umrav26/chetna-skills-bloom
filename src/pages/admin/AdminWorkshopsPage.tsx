@@ -20,6 +20,8 @@ interface Workshop {
   is_free: boolean;
   status: 'pending' | 'approved' | 'rejected';
   created_at: string;
+  submitted_by?: string | null;
+  updated_at?: string;
 }
 
 const AdminWorkshopsPage = () => {
@@ -43,7 +45,15 @@ const AdminWorkshopsPage = () => {
 
       if (error) throw error;
 
-      setWorkshops(data || []);
+      // Cast the status field to the correct type
+      const typedData = data?.map(workshop => ({
+        ...workshop,
+        status: workshop.status as 'pending' | 'approved' | 'rejected',
+        location: workshop.location || '',
+        description: workshop.description || ''
+      })) || [];
+
+      setWorkshops(typedData);
     } catch (error) {
       console.error('Error fetching workshops:', error);
       toast({

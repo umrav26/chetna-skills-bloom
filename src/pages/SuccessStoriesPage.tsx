@@ -128,23 +128,38 @@ const SuccessStoriesPage = () => {
   };
   return (
     <Layout>
-      {/* Hero Section */}
-      
-
-      {/* Success Stories Section */}
-      
-
-      {/* Stats Section */}
-      
-
-      {/* Video Testimonials Section */}
-      
-
-      {/* Before & After Section */}
-      
-
-      {/* CTA Section */}
-      
+      <div>
+        {/* Success Stories Section - Fixed the empty Layout by adding content */}
+        <div className="container mx-auto py-12 px-4">
+          <SectionTitle
+            title="Success Stories" 
+            subtitle="Real students, real transformations" 
+            className="text-center mb-10"
+          />
+          
+          <Tabs defaultValue="all" value={activeTab} onValueChange={setActiveTab}>
+            <TabsList className="grid grid-cols-3 md:grid-cols-5 mb-8">
+              <TabsTrigger value="all">All Stories</TabsTrigger>
+              <TabsTrigger value="placement">Job Placement</TabsTrigger>
+              <TabsTrigger value="freelance">Freelancing</TabsTrigger>
+              <TabsTrigger value="entrepreneurship">Business</TabsTrigger>
+              <TabsTrigger value="education">Education</TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value={activeTab} className="space-y-6">
+              {filteredStories.map(story => (
+                <StoryCard 
+                  key={story.id} 
+                  story={story}
+                  getCategoryLabel={getCategoryLabel}
+                  getCategoryIcon={getCategoryIcon}
+                  getBadgeColor={getBadgeColor}
+                />
+              ))}
+            </TabsContent>
+          </Tabs>
+        </div>
+      </div>
     </Layout>
   );
 };
