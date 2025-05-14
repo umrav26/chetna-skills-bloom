@@ -1,5 +1,4 @@
-
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import SectionTitle from '../components/SectionTitle';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
@@ -55,6 +54,7 @@ const getLevelBadgeVariant = (level: CourseLevel): "default" | "secondary" | "ou
 const CoursesPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState<string>('all');
+  const [animateCards, setAnimateCards] = useState(false);
   
   // Updated course data from the provided fee structure
   const courses: Course[] = [
@@ -240,6 +240,11 @@ const CoursesPage = () => {
     }
   ];
 
+  // Trigger animation after component mounts
+  useEffect(() => {
+    setAnimateCards(true);
+  }, []);
+
   // Filter courses based on active category and search query
   const filteredCourses = courses.filter(course => {
     const matchesCategory = activeCategory === 'all' || course.category === activeCategory;
@@ -250,77 +255,119 @@ const CoursesPage = () => {
 
   return (
     <Layout>
-      <section className="py-12 md:py-16 bg-muted/30">
-        <div className="container">
-          <SectionTitle
-            title="Explore Our Courses (Coming Soon)"
-            subtitle="Discover practical, industry-relevant courses designed to help you develop in-demand skills."
-            centered
-          />
+      <section className="py-16 md:py-24 bg-gradient-to-b from-muted/30 to-background">
+        <div className="container max-w-7xl mx-auto px-4">
+          <div className="max-w-3xl mx-auto text-center mb-16">
+            <span className="inline-block px-4 py-1.5 mb-4 text-sm font-medium text-primary bg-primary/10 rounded-full animate-fade-in">
+              Course Catalog
+            </span>
+            <SectionTitle
+              title="Explore Our Courses"
+              subtitle="Discover practical, industry-relevant courses designed to help you develop in-demand skills for today's job market."
+              centered
+            />
+          </div>
 
           {/* Search and Filter Bar */}
-          <div className="flex flex-col md:flex-row gap-4 mb-8">
+          <div className="flex flex-col md:flex-row gap-4 mb-12 animate-fade-in" style={{ animationDelay: '0.2s' }}>
             <div className="relative flex-grow">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
               <Input
                 placeholder="Search courses by name or keyword..."
-                className="pl-10"
+                className="pl-10 bg-background border-muted"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
-            <Button variant="outline" className="flex items-center gap-2">
+            <Button variant="outline" className="flex items-center gap-2 border-muted">
               <Filter className="h-4 w-4" />
-              <span>More Filters</span>
+              <span>Filters</span>
             </Button>
           </div>
 
           {/* Category Tabs */}
-          <Tabs defaultValue="all" onValueChange={setActiveCategory} className="mb-8">
-            <TabsList className="mb-6">
-              <TabsTrigger value="all">All Courses</TabsTrigger>
-              <TabsTrigger value="tech">Tech Skills</TabsTrigger>
-              <TabsTrigger value="creative">Creative</TabsTrigger>
-              <TabsTrigger value="business">Business</TabsTrigger>
-              <TabsTrigger value="soft">Soft Skills</TabsTrigger>
-            </TabsList>
+          <div className="animate-fade-in" style={{ animationDelay: '0.3s' }}>
+            <Tabs defaultValue="all" onValueChange={setActiveCategory} className="mb-12">
+              <TabsList className="mb-8 bg-transparent p-1 flex flex-wrap justify-center gap-2">
+                <TabsTrigger value="all" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+                  All Courses
+                </TabsTrigger>
+                <TabsTrigger value="tech" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+                  Tech Skills
+                </TabsTrigger>
+                <TabsTrigger value="creative" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+                  Creative
+                </TabsTrigger>
+                <TabsTrigger value="business" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+                  Business
+                </TabsTrigger>
+                <TabsTrigger value="soft" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
+                  Soft Skills
+                </TabsTrigger>
+              </TabsList>
 
-            <TabsContent value="all" className="mt-0">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredCourses.map((course) => (
-                  <CourseCard key={course.id} course={course} />
-                ))}
-              </div>
-            </TabsContent>
-            <TabsContent value="tech" className="mt-0">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredCourses.map((course) => (
-                  <CourseCard key={course.id} course={course} />
-                ))}
-              </div>
-            </TabsContent>
-            <TabsContent value="creative" className="mt-0">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredCourses.map((course) => (
-                  <CourseCard key={course.id} course={course} />
-                ))}
-              </div>
-            </TabsContent>
-            <TabsContent value="business" className="mt-0">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredCourses.map((course) => (
-                  <CourseCard key={course.id} course={course} />
-                ))}
-              </div>
-            </TabsContent>
-            <TabsContent value="soft" className="mt-0">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {filteredCourses.map((course) => (
-                  <CourseCard key={course.id} course={course} />
-                ))}
-              </div>
-            </TabsContent>
-          </Tabs>
+              <TabsContent value="all" className="mt-0">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {filteredCourses.map((course, index) => (
+                    <CourseCard 
+                      key={course.id} 
+                      course={course} 
+                      animate={animateCards} 
+                      index={index}
+                    />
+                  ))}
+                </div>
+              </TabsContent>
+              <TabsContent value="tech" className="mt-0">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {filteredCourses.map((course, index) => (
+                    <CourseCard 
+                      key={course.id} 
+                      course={course} 
+                      animate={animateCards} 
+                      index={index}
+                    />
+                  ))}
+                </div>
+              </TabsContent>
+              <TabsContent value="creative" className="mt-0">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {filteredCourses.map((course, index) => (
+                    <CourseCard 
+                      key={course.id} 
+                      course={course} 
+                      animate={animateCards} 
+                      index={index}
+                    />
+                  ))}
+                </div>
+              </TabsContent>
+              <TabsContent value="business" className="mt-0">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {filteredCourses.map((course, index) => (
+                    <CourseCard 
+                      key={course.id} 
+                      course={course} 
+                      animate={animateCards} 
+                      index={index}
+                    />
+                  ))}
+                </div>
+              </TabsContent>
+              <TabsContent value="soft" className="mt-0">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {filteredCourses.map((course, index) => (
+                    <CourseCard 
+                      key={course.id} 
+                      course={course} 
+                      animate={animateCards} 
+                      index={index}
+                    />
+                  ))}
+                </div>
+              </TabsContent>
+            </Tabs>
+          </div>
         </div>
       </section>
     </Layout>
@@ -328,16 +375,31 @@ const CoursesPage = () => {
 };
 
 // Course Card Component
-const CourseCard = ({ course }: { course: Course }) => {
+interface CourseCardProps {
+  course: Course;
+  animate: boolean;
+  index: number;
+}
+
+const CourseCard = ({ course, animate, index }: CourseCardProps) => {
   return (
-    <Card className="overflow-hidden hover:shadow-md transition-shadow card-hover">
-      <div className="aspect-w-16 aspect-h-9 bg-muted flex items-center justify-center p-4">
-        <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
+    <Card 
+      className={`overflow-hidden hover:shadow-lg transition-all duration-300 border-muted ${
+        animate ? 'animate-fade-in' : 'opacity-0'
+      }`} 
+      style={{ 
+        animationDelay: `${0.1 * (index + 1)}s`,
+        transform: animate ? 'translateY(0)' : 'translateY(20px)'
+      }}
+    >
+      <div className="aspect-w-16 aspect-h-9 bg-muted/30 flex items-center justify-center p-4 group relative overflow-hidden">
+        <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center z-10 group-hover:scale-110 transition-all duration-300">
           {course.icon}
         </div>
+        <div className="absolute inset-0 bg-gradient-to-tr from-primary/5 to-transparent opacity-70"></div>
       </div>
       <CardContent className="p-5">
-        <div className="flex justify-between items-start mb-2">
+        <div className="flex justify-between items-start mb-3">
           <Badge variant="outline" className="bg-primary/5 text-primary">
             {getCategoryLabel(course.category)}
           </Badge>
@@ -346,7 +408,7 @@ const CourseCard = ({ course }: { course: Course }) => {
           </Badge>
         </div>
         
-        <h3 className="text-xl font-semibold mb-2">{course.name}</h3>
+        <h3 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">{course.name}</h3>
         
         <p className="text-muted-foreground mb-4 line-clamp-2">
           {course.description}
@@ -392,7 +454,7 @@ const CourseCard = ({ course }: { course: Course }) => {
             ))}
           </div>
           
-          <Button asChild className="w-full mt-2">
+          <Button asChild className="w-full mt-2 bg-primary hover:bg-primary/90 transition-all duration-300">
             <Link to={`/courses/${course.id}`}>View Details</Link>
           </Button>
         </div>

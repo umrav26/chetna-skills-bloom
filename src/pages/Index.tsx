@@ -6,6 +6,7 @@ import FeaturedCourses from '../components/home/FeaturedCourses';
 import Testimonials from '../components/home/Testimonials';
 import Workshops from '../components/home/Workshops';
 import Newsletter from '../components/home/Newsletter';
+import FAQ from '../components/home/FAQ';
 
 const Index = () => {
   return (
@@ -15,6 +16,7 @@ const Index = () => {
       <FeaturedCourses />
       <Workshops />
       <Testimonials />
+      <FAQ />
       <Newsletter />
     </Layout>
   );
