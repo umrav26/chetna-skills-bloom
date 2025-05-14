@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -25,19 +24,23 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
-interface TestimonialFormProps {
-  defaultValues?: FormValues;
+export interface TestimonialFormProps {
   testimonialId?: string;
+  defaultValues?: FormValues;
+  initialData?: FormValues;
 }
 
-const TestimonialForm = ({ defaultValues, testimonialId }: TestimonialFormProps) => {
+const TestimonialForm = ({ testimonialId, defaultValues, initialData }: TestimonialFormProps) => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  
+  // Use initialData for backward compatibility
+  const formInitialValues = initialData || defaultValues;
   
   // Initialize the form
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
-    defaultValues: defaultValues || {
+    defaultValues: formInitialValues || {
       name: '',
       role: '',
       content: '',

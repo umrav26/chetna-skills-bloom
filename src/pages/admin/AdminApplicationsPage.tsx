@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import AdminLayout from '@/components/admin/AdminLayout';
@@ -19,6 +18,7 @@ interface Application {
   status: 'pending' | 'approved' | 'rejected';
   type: 'trainer' | 'student';
   created_at: string;
+  course?: string;
 }
 
 const AdminApplicationsPage = () => {
@@ -36,12 +36,13 @@ const AdminApplicationsPage = () => {
       const { data, error } = await supabase
         .from('applications')
         .select('*')
-        .eq('type', type)
+        .eq('type', type === 'trainers' ? 'trainer' : 'student')
         .order('created_at', { ascending: false });
 
       if (error) throw error;
 
-      setApplications(data || []);
+      // Type assertion to match our Application interface
+      setApplications(data as Application[] || []);
     } catch (error) {
       console.error('Error fetching applications:', error);
       toast({

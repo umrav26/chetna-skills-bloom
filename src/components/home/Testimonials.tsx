@@ -7,9 +7,9 @@ import TestimonialCard from '../TestimonialCard';
 export interface TestimonialProps {
   id: string;
   name: string;
-  role: string;
+  role?: string;
   content: string;
-  rating: number;
+  rating?: number;
   course?: string;
   location?: string;
   image?: string;
@@ -29,8 +29,7 @@ const Testimonials = () => {
         if (error) throw error;
         
         if (data) {
-          // Safe to cast as we know the structure matches TestimonialProps
-          setTestimonials(data as unknown as TestimonialProps[]);
+          setTestimonials(data);
         }
       } catch (error) {
         console.error('Error:', error);
@@ -83,8 +82,15 @@ const Testimonials = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
           {displayTestimonials.map((testimonial, index) => (
             <TestimonialCard 
-              key={testimonial.id} 
-              {...testimonial} 
+              key={testimonial.id}
+              name={testimonial.name}
+              role={testimonial.role}
+              content={testimonial.content}
+              rating={testimonial.rating}
+              course={testimonial.course}
+              location={testimonial.location}
+              image={testimonial.image}
+              className={`animate-fadeIn`}
               style={{ animationDelay: `${index * 0.1}s` }}
             />
           ))}

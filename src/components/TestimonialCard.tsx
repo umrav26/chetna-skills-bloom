@@ -11,6 +11,8 @@ export interface TestimonialProps {
   rating?: number;
   course?: string;
   location?: string;
+  className?: string;
+  style?: React.CSSProperties;
 }
 
 const TestimonialCard: React.FC<TestimonialProps> = ({
@@ -20,10 +22,12 @@ const TestimonialCard: React.FC<TestimonialProps> = ({
   image,
   rating,
   course,
-  location
+  location,
+  className,
+  style
 }) => {
   return (
-    <Card className="h-full overflow-hidden">
+    <Card className={`h-full overflow-hidden ${className || ''}`} style={style}>
       <CardContent className="p-6">
         {rating && (
           <div className="flex mb-4">
