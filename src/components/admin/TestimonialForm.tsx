@@ -71,7 +71,7 @@ const TestimonialForm = ({ initialData, onSuccess }: TestimonialFormProps) => {
       } else {
         const { error } = await supabase
           .from('testimonials')
-          .insert([data]);
+          .insert(data);
         
         if (error) throw error;
         

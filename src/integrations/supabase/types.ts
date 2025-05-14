@@ -54,6 +54,45 @@ export type Database = {
         }
         Relationships: []
       }
+      testimonials: {
+        Row: {
+          content: string
+          course: string | null
+          created_at: string
+          id: string
+          image: string | null
+          location: string | null
+          name: string
+          rating: number | null
+          role: string | null
+          updated_at: string
+        }
+        Insert: {
+          content: string
+          course?: string | null
+          created_at?: string
+          id?: string
+          image?: string | null
+          location?: string | null
+          name: string
+          rating?: number | null
+          role?: string | null
+          updated_at?: string
+        }
+        Update: {
+          content?: string
+          course?: string | null
+          created_at?: string
+          id?: string
+          image?: string | null
+          location?: string | null
+          name?: string
+          rating?: number | null
+          role?: string | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           created_at: string | null

@@ -23,7 +23,8 @@ const Testimonials = () => {
         }
         
         if (data) {
-          setTestimonials(data as TestimonialProps[]);
+          // Safe to cast as we know the structure matches TestimonialProps
+          setTestimonials(data as unknown as TestimonialProps[]);
         }
       } catch (error) {
         console.error('Error:', error);

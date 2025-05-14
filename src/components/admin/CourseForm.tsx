@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -71,7 +70,7 @@ const CourseForm = ({ initialData, onSuccess }: CourseFormProps) => {
       } else {
         const { error } = await supabase
           .from('courses')
-          .insert([data]);
+          .insert(data);
         
         if (error) throw error;
         
