@@ -1,3 +1,4 @@
+
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -5,7 +6,7 @@ const Hero = () => {
   return <section className="relative bg-gradient-to-br from-background to-muted/50 overflow-hidden">
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute right-0 top-20 w-64 h-64 rounded-full bg-chetna-blue/10 animate-float" />
-        <div className="absolute left-20 bottom-20 w-48 h-48 rounded-full bg-chetna-green/10 animate-float" style={{
+        <div className="absolute left-20 bottom-20 w-48 h-48 rounded-full bg-chetna-red/10 animate-float" style={{
         animationDelay: '1s'
       }} />
         <div className="absolute top-40 left-1/4 w-32 h-32 rounded-full bg-chetna-peach/10 animate-float" style={{
@@ -15,7 +16,7 @@ const Hero = () => {
       
       <div className="container relative section-padding min-h-[85vh] flex flex-col items-center justify-center text-center">
         <h1 className="heading-xl mb-6 animate-fade-in max-w-4xl">
-          <span className="gradient-text">Practical Skills. Real Careers.</span>
+          <span className="bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">Practical Skills. Real Careers.</span>
           <br />Rural to Global.
         </h1>
         
