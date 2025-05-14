@@ -22,7 +22,13 @@ import AuthPage from "./pages/AuthPage";
 import AdminDashboardPage from "./pages/admin/AdminDashboardPage";
 import AdminWorkshopsPage from "./pages/admin/AdminWorkshopsPage";
 import AdminCoursesPage from "./pages/admin/AdminCoursesPage";
+import AddCoursePage from "./pages/admin/AddCoursePage";
+import EditCoursePage from "./pages/admin/EditCoursePage";
 import AdminWaitlistPage from "./pages/admin/AdminWaitlistPage";
+import AdminSuccessStoriesPage from "./pages/admin/AdminSuccessStoriesPage";
+import AddTestimonialPage from "./pages/admin/AddTestimonialPage";
+import EditTestimonialPage from "./pages/admin/EditTestimonialPage";
+import AdminApplicationsPage from "./pages/admin/AdminApplicationsPage";
 import AdminSettingsPage from "./pages/admin/AdminSettingsPage";
 
 const queryClient = new QueryClient();
@@ -73,10 +79,58 @@ const App = () => (
               } 
             />
             <Route 
+              path="/admin/courses/add" 
+              element={
+                <ProtectedRoute requireAdmin>
+                  <AddCoursePage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/admin/courses/edit/:courseId" 
+              element={
+                <ProtectedRoute requireAdmin>
+                  <EditCoursePage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
               path="/admin/waitlist" 
               element={
                 <ProtectedRoute requireAdmin>
                   <AdminWaitlistPage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/admin/success-stories" 
+              element={
+                <ProtectedRoute requireAdmin>
+                  <AdminSuccessStoriesPage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/admin/success-stories/add" 
+              element={
+                <ProtectedRoute requireAdmin>
+                  <AddTestimonialPage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/admin/success-stories/edit/:testimonialId" 
+              element={
+                <ProtectedRoute requireAdmin>
+                  <EditTestimonialPage />
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/admin/applications" 
+              element={
+                <ProtectedRoute requireAdmin>
+                  <AdminApplicationsPage />
                 </ProtectedRoute>
               } 
             />

@@ -13,7 +13,8 @@ import {
   LogOut,
   ChevronLeft,
   Menu,
-  X
+  X,
+  FileText
 } from 'lucide-react';
 
 interface AdminLayoutProps {
@@ -30,6 +31,8 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
     { name: 'Dashboard', href: '/admin', icon: LayoutDashboard },
     { name: 'Workshops', href: '/admin/workshops', icon: CalendarCheck },
     { name: 'Courses', href: '/admin/courses', icon: BookOpen },
+    { name: 'Success Stories', href: '/admin/success-stories', icon: FileText },
+    { name: 'Applications', href: '/admin/applications', icon: Users },
     { name: 'Waitlist', href: '/admin/waitlist', icon: ListChecks },
     { name: 'Settings', href: '/admin/settings', icon: Settings },
   ];

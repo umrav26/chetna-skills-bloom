@@ -1,31 +1,67 @@
-import { useState } from 'react';
+
+import { useState, useEffect } from 'react';
+import { supabase } from '@/integrations/supabase/client';
 import SectionTitle from '../SectionTitle';
 import TestimonialCard, { TestimonialProps } from '../TestimonialCard';
-const testimonials: TestimonialProps[] = [{
-  name: 'Priya Sharma',
-  role: 'Web Developer',
-  content: 'Joining Chetna Academy was a turning point in my career. The hands-on training helped me transition from a basic computer operator to a skilled web developer. I now work remotely for a Bangalore company while staying in my hometown.',
-  rating: 5,
-  course: 'Web Development',
-  location: 'Kokrajhar'
-}, {
-  name: 'Rajesh Kumar',
-  role: 'Digital Marketing Specialist',
-  content: 'The practical approach to digital marketing at Chetna Academy helped me understand real-world applications. Within two months of completing the course, I started my own marketing agency that now serves local businesses.',
-  rating: 5,
-  course: 'Digital Marketing',
-  location: 'Guwahati'
-}, {
-  name: 'Mira Basumatary',
-  role: 'Front Office Executive',
-  content: 'As someone from a rural area, I never thought I could gain the confidence to work in a corporate environment. The communication skills course changed that completely. The trainers were supportive and understood our cultural context.',
-  rating: 5,
-  course: 'Communication Skills',
-  location: 'Bongaigaon'
-}];
+import { Loader2 } from 'lucide-react';
+
 const Testimonials = () => {
-  return <section className="section-padding bg-white overflow-hidden">
-      
-    </section>;
+  const [testimonials, setTestimonials] = useState<TestimonialProps[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchTestimonials = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('testimonials')
+          .select('*')
+          .limit(3);
+        
+        if (error) {
+          console.error('Error fetching testimonials:', error);
+          return;
+        }
+        
+        if (data) {
+          setTestimonials(data as TestimonialProps[]);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchTestimonials();
+  }, []);
+
+  return (
+    <section className="section-padding bg-white overflow-hidden">
+      <div className="container">
+        <SectionTitle
+          title="Success Stories"
+          subtitle="What our students say"
+          centered
+        />
+        
+        {loading ? (
+          <div className="flex justify-center items-center py-12">
+            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+          </div>
+        ) : testimonials.length > 0 ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-8">
+            {testimonials.map((testimonial, idx) => (
+              <TestimonialCard key={idx} {...testimonial} />
+            ))}
+          </div>
+        ) : (
+          <p className="text-center text-muted-foreground py-8">
+            No testimonials available yet.
+          </p>
+        )}
+      </div>
+    </section>
+  );
 };
+
 export default Testimonials;
