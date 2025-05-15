@@ -1,15 +1,22 @@
 
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   const toggleDropdown = (name: string) => {
     setActiveDropdown(activeDropdown === name ? null : name);
+  };
+
+  const handleCategoryClick = (path: string) => {
+    navigate(path);
+    setIsMenuOpen(false);
+    setActiveDropdown(null);
   };
 
   const navLinks = [
@@ -20,7 +27,8 @@ const Header: React.FC = () => {
       dropdown: [
         { name: 'Tech Skills', path: '/courses/tech' },
         { name: 'Soft Skills', path: '/courses/soft' },
-        { name: 'Foundational', path: '/courses/foundational' }
+        { name: 'Business', path: '/courses/business' },
+        { name: 'Creative', path: '/courses/creative' }
       ]
     },
     { name: 'About Us', path: '/about' },
@@ -60,14 +68,13 @@ const Header: React.FC = () => {
                   {activeDropdown === link.name && (
                     <div className="absolute top-full left-0 mt-1 w-48 rounded-md bg-white shadow-lg ring-1 ring-black/5 overflow-hidden">
                       {link.dropdown.map((item) => (
-                        <Link
+                        <button
                           key={item.name}
-                          to={item.path}
-                          className="block px-4 py-2 hover:bg-muted transition-colors"
-                          onClick={() => setActiveDropdown(null)}
+                          onClick={() => handleCategoryClick(item.path)}
+                          className="block w-full text-left px-4 py-2 hover:bg-muted transition-colors"
                         >
                           {item.name}
-                        </Link>
+                        </button>
                       ))}
                     </div>
                   )}
@@ -121,14 +128,13 @@ const Header: React.FC = () => {
                     {activeDropdown === link.name && (
                       <div className="ml-4 mt-2 space-y-1">
                         {link.dropdown.map((item) => (
-                          <Link
+                          <button
                             key={item.name}
-                            to={item.path}
-                            className="block py-2"
-                            onClick={toggleMenu}
+                            onClick={() => handleCategoryClick(item.path)}
+                            className="block w-full text-left py-2"
                           >
                             {item.name}
-                          </Link>
+                          </button>
                         ))}
                       </div>
                     )}

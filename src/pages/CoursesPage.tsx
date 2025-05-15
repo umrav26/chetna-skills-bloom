@@ -1,4 +1,6 @@
+
 import { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
 import SectionTitle from '../components/SectionTitle';
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
@@ -52,6 +54,8 @@ const getLevelBadgeVariant = (level: CourseLevel): "default" | "secondary" | "ou
 };
 
 const CoursesPage = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [animateCards, setAnimateCards] = useState(false);
@@ -240,6 +244,27 @@ const CoursesPage = () => {
     }
   ];
 
+  // Extract category from URL path
+  useEffect(() => {
+    const pathParts = location.pathname.split('/');
+    if (pathParts.length > 2) {
+      const urlCategory = pathParts[2];
+      if (['tech', 'soft', 'business', 'creative'].includes(urlCategory)) {
+        setActiveCategory(urlCategory);
+      }
+    }
+  }, [location.pathname]);
+
+  // Handle tab change
+  const handleTabChange = (value: string) => {
+    setActiveCategory(value);
+    if (value === 'all') {
+      navigate('/courses');
+    } else {
+      navigate(`/courses/${value}`);
+    }
+  };
+
   // Trigger animation after component mounts
   useEffect(() => {
     setAnimateCards(true);
@@ -287,7 +312,11 @@ const CoursesPage = () => {
 
           {/* Category Tabs */}
           <div className="animate-fade-in" style={{ animationDelay: '0.3s' }}>
-            <Tabs defaultValue="all" onValueChange={setActiveCategory} className="mb-12">
+            <Tabs 
+              value={activeCategory} 
+              onValueChange={handleTabChange} 
+              className="mb-12"
+            >
               <TabsList className="mb-8 bg-transparent p-1 flex flex-wrap justify-center gap-2">
                 <TabsTrigger value="all" className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground">
                   All Courses
