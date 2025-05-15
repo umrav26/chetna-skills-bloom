@@ -69,8 +69,7 @@ const Testimonials = () => {
       <div className="container mx-auto px-4">
         <SectionTitle
           title="What Our Students Say"
-          subtitle="Testimonials"
-          description="Hear from our students about their learning experience at Chetna Academy"
+          subtitle="Hear from our students about their learning experience at Chetna Academy"
         />
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
