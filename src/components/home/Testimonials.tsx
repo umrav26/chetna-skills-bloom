@@ -1,7 +1,10 @@
+
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import SectionTitle from '../SectionTitle';
 import TestimonialCard from '../TestimonialCard';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
+
 export interface TestimonialProps {
   id: string;
   name: string;
@@ -12,8 +15,10 @@ export interface TestimonialProps {
   location?: string;
   image?: string;
 }
+
 const Testimonials = () => {
   const [testimonials, setTestimonials] = useState<TestimonialProps[]>([]);
+  
   useEffect(() => {
     const fetchTestimonials = async () => {
       try {
@@ -58,6 +63,33 @@ const Testimonials = () => {
 
   // Use fetched testimonials or fallback if empty
   const displayTestimonials = testimonials.length > 0 ? testimonials : fallbackTestimonials;
-  return;
+
+  return (
+    <section className="py-16 bg-gray-50">
+      <div className="container mx-auto px-4">
+        <SectionTitle
+          title="What Our Students Say"
+          subtitle="Testimonials"
+          description="Hear from our students about their learning experience at Chetna Academy"
+        />
+        
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+          {displayTestimonials.map((testimonial) => (
+            <TestimonialCard
+              key={testimonial.id}
+              name={testimonial.name}
+              role={testimonial.role}
+              content={testimonial.content}
+              rating={testimonial.rating}
+              location={testimonial.location}
+              course={testimonial.course}
+              image={testimonial.image}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 };
+
 export default Testimonials;
