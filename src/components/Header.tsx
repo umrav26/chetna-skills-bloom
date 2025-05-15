@@ -21,16 +21,7 @@ const Header: React.FC = () => {
 
   const navLinks = [
     { name: 'Home', path: '/' },
-    { 
-      name: 'Courses', 
-      path: '/courses',
-      dropdown: [
-        { name: 'Tech Skills', path: '/courses/tech' },
-        { name: 'Soft Skills', path: '/courses/soft' },
-        { name: 'Business', path: '/courses/business' },
-        { name: 'Creative', path: '/courses/creative' }
-      ]
-    },
+    { name: 'Courses', path: '/courses' }, // Removed dropdown, direct link to courses
     { name: 'About Us', path: '/about' },
     { name: 'Workshops', path: '/workshops' },
     { name: 'Join as Trainer', path: '/join-trainer' },
@@ -56,37 +47,12 @@ const Header: React.FC = () => {
         <nav className="hidden md:flex items-center space-x-6">
           {navLinks.map((link) => (
             <div key={link.name} className="relative group">
-              {link.dropdown ? (
-                <>
-                  <button 
-                    className="inline-flex items-center text-foreground/80 hover:text-foreground transition-colors"
-                    onClick={() => toggleDropdown(link.name)}
-                  >
-                    {link.name}
-                    <ChevronDown className="ml-1 h-4 w-4" />
-                  </button>
-                  {activeDropdown === link.name && (
-                    <div className="absolute top-full left-0 mt-1 w-48 rounded-md bg-white shadow-lg ring-1 ring-black/5 overflow-hidden">
-                      {link.dropdown.map((item) => (
-                        <button
-                          key={item.name}
-                          onClick={() => handleCategoryClick(item.path)}
-                          className="block w-full text-left px-4 py-2 hover:bg-muted transition-colors"
-                        >
-                          {item.name}
-                        </button>
-                      ))}
-                    </div>
-                  )}
-                </>
-              ) : (
-                <Link
-                  to={link.path}
-                  className="text-foreground/80 hover:text-foreground transition-colors"
-                >
-                  {link.name}
-                </Link>
-              )}
+              <Link
+                to={link.path}
+                className="text-foreground/80 hover:text-foreground transition-colors"
+              >
+                {link.name}
+              </Link>
             </div>
           ))}
         </nav>
@@ -116,38 +82,13 @@ const Header: React.FC = () => {
           <div className="container py-4 space-y-3">
             {navLinks.map((link) => (
               <div key={link.name} className="py-2">
-                {link.dropdown ? (
-                  <>
-                    <button 
-                      className="flex items-center justify-between w-full text-left"
-                      onClick={() => toggleDropdown(link.name)}
-                    >
-                      {link.name}
-                      <ChevronDown className="h-4 w-4" />
-                    </button>
-                    {activeDropdown === link.name && (
-                      <div className="ml-4 mt-2 space-y-1">
-                        {link.dropdown.map((item) => (
-                          <button
-                            key={item.name}
-                            onClick={() => handleCategoryClick(item.path)}
-                            className="block w-full text-left py-2"
-                          >
-                            {item.name}
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                  </>
-                ) : (
-                  <Link
-                    to={link.path}
-                    className="block"
-                    onClick={toggleMenu}
-                  >
-                    {link.name}
-                  </Link>
-                )}
+                <Link
+                  to={link.path}
+                  className="block"
+                  onClick={toggleMenu}
+                >
+                  {link.name}
+                </Link>
               </div>
             ))}
             <div className="flex flex-col space-y-3 pt-4">
