@@ -3,12 +3,12 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { supabase } from '@/integrations/supabase/client';
-import { Loader2 } from 'lucide-react';
+import { Loader2, Calendar, Award, CheckCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
-import CourseCard, { CourseProps } from '@/components/CourseCard'; 
+import { Badge } from '@/components/ui/badge';
 
-// Define your course interface - similar to what we use elsewhere
+// Define your course interface
 interface Course {
   id: string;
   title: string;
@@ -143,68 +143,78 @@ const CourseDetailsPage = () => {
 
   return (
     <Layout>
-      <div className="container py-16">
-        <div className="max-w-4xl mx-auto">
-          <h1 className="text-3xl md:text-4xl font-bold mb-6">{course.title}</h1>
-          
-          <div className="bg-white rounded-lg shadow-sm border p-6 mb-8">
-            <h2 className="text-xl font-semibold mb-4">Course Details</h2>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <h3 className="text-lg font-medium mb-3">Description</h3>
-                <p className="text-gray-700">{course.description || 'No description available.'}</p>
-              </div>
-              
-              <div className="space-y-4">
-                <div>
-                  <h3 className="text-lg font-medium mb-2">Category</h3>
-                  <p className="text-gray-700">{course.category}</p>
-                </div>
-                
-                <div>
-                  <h3 className="text-lg font-medium mb-2">Level</h3>
-                  <p className="text-gray-700">{course.level}</p>
-                </div>
-                
-                <div>
-                  <h3 className="text-lg font-medium mb-2">Duration</h3>
-                  <p className="text-gray-700">{course.duration}</p>
-                </div>
-                
-                <div>
-                  <h3 className="text-lg font-medium mb-2">Fee</h3>
-                  <p className="text-gray-700">₹{course.fee}</p>
-                </div>
-              </div>
+      <div className="bg-muted/20 py-16">
+        <div className="container">
+          <div className="max-w-4xl mx-auto">
+            <div className="mb-8">
+              <Badge variant="outline" className="mb-4 bg-primary/10 text-primary">
+                {course.category}
+              </Badge>
+              <h1 className="text-3xl md:text-4xl font-bold mb-4">{course.title}</h1>
+              <p className="text-lg text-muted-foreground">{course.description}</p>
             </div>
             
-            {course.skills && course.skills.length > 0 && (
-              <div className="mt-8">
-                <h3 className="text-lg font-medium mb-3">Skills You'll Learn</h3>
-                <ul className="list-disc list-inside space-y-1 text-gray-700">
-                  {course.skills.map((skill, index) => (
-                    <li key={index}>{skill}</li>
-                  ))}
-                </ul>
+            <div className="bg-card rounded-xl shadow-sm border overflow-hidden">
+              {/* Course Meta Info */}
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 bg-muted/30">
+                <div className="flex items-center gap-3">
+                  <Calendar className="h-10 w-10 p-2 rounded-full bg-primary/10 text-primary" />
+                  <div>
+                    <p className="text-sm text-muted-foreground">Duration</p>
+                    <p className="font-medium">{course.duration}</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-center gap-3">
+                  <Award className="h-10 w-10 p-2 rounded-full bg-primary/10 text-primary" />
+                  <div>
+                    <p className="text-sm text-muted-foreground">Level</p>
+                    <p className="font-medium">{course.level}</p>
+                  </div>
+                </div>
+                
+                <div className="flex items-center gap-3">
+                  <div className="h-10 w-10 p-2 rounded-full bg-primary/10 text-primary flex items-center justify-center">
+                    ₹
+                  </div>
+                  <div>
+                    <p className="text-sm text-muted-foreground">Fee (INR)</p>
+                    <p className="font-medium">₹{course.fee}</p>
+                  </div>
+                </div>
               </div>
-            )}
-            
-            {course.languages && course.languages.length > 0 && (
-              <div className="mt-6">
-                <h3 className="text-lg font-medium mb-3">Available Languages</h3>
-                <ul className="list-disc list-inside space-y-1 text-gray-700">
-                  {course.languages.map((language, index) => (
-                    <li key={index}>{language}</li>
-                  ))}
-                </ul>
+              
+              {/* Course Details */}
+              <div className="p-6">
+                <div className="mb-8">
+                  <h2 className="text-xl font-semibold mb-4">Languages</h2>
+                  <div className="flex flex-wrap gap-2">
+                    {course.languages.map((language, index) => (
+                      <Badge key={index} variant="secondary">
+                        {language}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+                
+                <div className="mb-8">
+                  <h2 className="text-xl font-semibold mb-4">Skills You'll Learn</h2>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {course.skills.map((skill, index) => (
+                      <div key={index} className="flex items-center gap-2">
+                        <CheckCircle className="h-5 w-5 text-primary" />
+                        <span>{skill}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                
+                <div className="mt-10">
+                  <Button size="lg" className="w-full sm:w-auto">
+                    Apply For This Course
+                  </Button>
+                </div>
               </div>
-            )}
-            
-            <div className="mt-8">
-              <Button size="lg">
-                Apply For This Course
-              </Button>
             </div>
           </div>
         </div>
