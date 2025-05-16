@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import Layout from '../components/Layout';
@@ -10,6 +9,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Search, Filter, Clock, BookOpen, Code, Shield, Database, Lightbulb, Calculator, BarChart, Camera, Megaphone, GraduationCap, Briefcase, DollarSign } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { supabase } from '@/integrations/supabase/client';
 
 // Define course types
 type CourseCategory = 'tech' | 'soft' | 'business' | 'creative';
@@ -30,6 +30,9 @@ interface Course {
   imageUrl: string;
   skills: string[];
   icon: React.ReactNode;
+  title?: string; // Added for database compatibility
+  fee?: string; // Added for database compatibility
+  duration?: string; // Added for database compatibility
 }
 
 // Helper function for category label
@@ -59,8 +62,65 @@ const CoursesPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const [animateCards, setAnimateCards] = useState(false);
+  const [coursesFromDB, setCoursesFromDB] = useState<Course[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   
-  // Updated course data from the provided fee structure
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('courses')
+          .select('*')
+          .eq('status', 'published');
+        
+        if (error) {
+          console.error('Error fetching courses:', error);
+          return;
+        }
+
+        // Transform database courses to match our Course interface
+        const formattedCourses: Course[] = data.map(course => {
+          // Determine the icon based on category
+          let icon = <BookOpen className="h-5 w-5" />;
+          if (course.category === 'tech') icon = <Code className="h-5 w-5" />;
+          if (course.category === 'soft') icon = <Megaphone className="h-5 w-5" />;
+          if (course.category === 'business') icon = <Briefcase className="h-5 w-5" />;
+          if (course.category === 'creative') icon = <Lightbulb className="h-5 w-5" />;
+
+          // Format durations and fees
+          const durations = [{
+            duration: course.duration || '3-month',
+            fee: parseInt(course.fee?.replace(/[^\d]/g, '') || '0', 10)
+          }];
+
+          return {
+            id: course.id,
+            name: course.title,
+            title: course.title,
+            category: course.category as CourseCategory,
+            level: course.level as CourseLevel || 'beginner',
+            durations,
+            languages: course.languages || ['english'],
+            description: course.description || '',
+            imageUrl: '/placeholder.svg',
+            skills: course.skills || [],
+            icon,
+            fee: course.fee
+          };
+        });
+        
+        setCoursesFromDB(formattedCourses);
+      } catch (error) {
+        console.error('Error:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    fetchCourses();
+  }, []);
+  
+  // Updated course data from the provided fee structure (fallback courses)
   const courses: Course[] = [
     {
       id: 'full-stack-development',
@@ -270,11 +330,16 @@ const CoursesPage = () => {
     setAnimateCards(true);
   }, []);
 
+  // Use fetched courses or fallback if none are available
+  const courses = coursesFromDB.length > 0 ? coursesFromDB : window.courses;
+  
   // Filter courses based on active category and search query
   const filteredCourses = courses.filter(course => {
     const matchesCategory = activeCategory === 'all' || course.category === activeCategory;
-    const matchesSearch = course.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                         course.description.toLowerCase().includes(searchQuery.toLowerCase());
+    const courseName = course.name || course.title || '';
+    const courseDesc = course.description || '';
+    const matchesSearch = courseName.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                         courseDesc.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
   });
 
