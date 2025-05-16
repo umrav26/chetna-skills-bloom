@@ -1,12 +1,11 @@
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import SectionTitle from '../SectionTitle';
 import { ArrowRight, Calendar, Award } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { supabase } from '@/integrations/supabase/client';
 
 export interface CourseProps {
   id: string;
@@ -17,108 +16,63 @@ export interface CourseProps {
   languages: string[];
   skills: string[];
   fee: string;
-  status?: string;
 }
 
+const featuredCourses: CourseProps[] = [
+  {
+    id: 'full-stack-development',
+    title: 'Full Stack Development',
+    category: 'Tech',
+    duration: '3-9 months',
+    level: 'Beginner to Advanced',
+    languages: ['English', 'Hindi'],
+    skills: ['HTML/CSS', 'JavaScript', 'React', 'Node.js', 'GitHub'],
+    fee: '6,000 - 13,000'
+  },
+  {
+    id: 'digital-marketing',
+    title: 'Digital Marketing',
+    category: 'Tech',
+    duration: '3-9 months',
+    level: 'Beginner to Intermediate',
+    languages: ['English', 'Hindi', 'Assamese'],
+    skills: ['SEO', 'Social Media', 'Content Marketing', 'Analytics'],
+    fee: '6,000 - 13,000'
+  },
+  {
+    id: 'communication-skills',
+    title: 'Communication Skills',
+    category: 'Soft Skills',
+    duration: '1.5-3 months',
+    level: 'All Levels',
+    languages: ['English', 'Hindi', 'Assamese', 'Bodo'],
+    skills: ['Public Speaking', 'Business Writing', 'Presentation', 'Collaboration'],
+    fee: '3,500 - 6,000'
+  },
+  {
+    id: 'ui-ux-design',
+    title: 'UI/UX Design',
+    category: 'Tech',
+    duration: '3-6 months',
+    level: 'Beginner to Intermediate',
+    languages: ['English', 'Hindi'],
+    skills: ['Wireframing', 'Figma', 'User Research', 'Prototyping'],
+    fee: '6,000 - 10,000'
+  }
+];
+
 const FeaturedCourses = () => {
-  const [courses, setCourses] = useState<CourseProps[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        const { data, error } = await supabase
-          .from('courses')
-          .select('*')
-          .eq('status', 'published')
-          .limit(4);
-        
-        if (error) {
-          console.error('Error fetching courses:', error);
-          return;
-        }
-        
-        // Transform database data to match CourseProps format
-        const formattedCourses: CourseProps[] = data.map(course => ({
-          id: course.id,
-          title: course.title,
-          category: course.category,
-          duration: course.duration || '3-9 months',
-          level: course.level || 'Beginner to Advanced',
-          languages: course.languages || ['English', 'Hindi'],
-          skills: course.skills || [],
-          fee: course.fee || 'Contact for pricing'
-        }));
-        
-        setCourses(formattedCourses);
-      } catch (error) {
-        console.error('Error:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    
-    fetchCourses();
-  }, []);
-
-  // Fallback courses if the database is empty
-  const fallbackCourses: CourseProps[] = [
-    {
-      id: 'full-stack-development',
-      title: 'Full Stack Development',
-      category: 'Tech',
-      duration: '3-9 months',
-      level: 'Beginner to Advanced',
-      languages: ['English', 'Hindi'],
-      skills: ['HTML/CSS', 'JavaScript', 'React', 'Node.js', 'GitHub'],
-      fee: '6,000 - 13,000'
-    },
-    {
-      id: 'digital-marketing',
-      title: 'Digital Marketing',
-      category: 'Tech',
-      duration: '3-9 months',
-      level: 'Beginner to Intermediate',
-      languages: ['English', 'Hindi', 'Assamese'],
-      skills: ['SEO', 'Social Media', 'Content Marketing', 'Analytics'],
-      fee: '6,000 - 13,000'
-    },
-    {
-      id: 'communication-skills',
-      title: 'Communication Skills',
-      category: 'Soft Skills',
-      duration: '1.5-3 months',
-      level: 'All Levels',
-      languages: ['English', 'Hindi', 'Assamese', 'Bodo'],
-      skills: ['Public Speaking', 'Business Writing', 'Presentation', 'Collaboration'],
-      fee: '3,500 - 6,000'
-    },
-    {
-      id: 'ui-ux-design',
-      title: 'UI/UX Design',
-      category: 'Tech',
-      duration: '3-6 months',
-      level: 'Beginner to Intermediate',
-      languages: ['English', 'Hindi'],
-      skills: ['Wireframing', 'Figma', 'User Research', 'Prototyping'],
-      fee: '6,000 - 10,000'
-    }
-  ];
-
-  // Use fetched courses or fallback if none are available
-  const displayCourses = courses.length > 0 ? courses : fallbackCourses;
-
   return (
     <section className="section-padding bg-muted/30">
       <div className="container">
         <SectionTitle 
-          title="Featured Courses"
+          title="Featured Courses (Coming Soon)"
           subtitle="Discover our most popular skill development programs designed to make you industry-ready."
           centered
         />
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {displayCourses.map((course, index) => (
+          {featuredCourses.map((course, index) => (
             <Card 
               key={course.id} 
               className="overflow-hidden card-hover animate-slide-in-bottom" 
