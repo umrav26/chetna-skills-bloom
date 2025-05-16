@@ -3,10 +3,9 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Layout from '../components/Layout';
 import { supabase } from '@/integrations/supabase/client';
-import { Loader2, Calendar, Award, CheckCircle } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from '@/components/ui/use-toast';
-import { Badge } from '@/components/ui/badge';
 
 // Define your course interface
 interface Course {
@@ -21,54 +20,6 @@ interface Course {
   skills: string[];
 }
 
-// Fallback courses for when the database doesn't return any courses
-const fallbackCourses: Record<string, Course> = {
-  'full-stack-development': {
-    id: 'full-stack-development',
-    title: 'Full Stack Development',
-    category: 'Tech',
-    duration: '3-9 months',
-    level: 'Beginner to Advanced',
-    languages: ['English', 'Hindi'],
-    skills: ['HTML/CSS', 'JavaScript', 'React', 'Node.js', 'GitHub', 'Deployment', 'AI tools'],
-    description: 'Master web development from frontend to backend with HTML, CSS, JavaScript, React, Node.js and more.',
-    fee: '6,000 - 13,000'
-  },
-  'digital-marketing': {
-    id: 'digital-marketing',
-    title: 'Digital Marketing',
-    category: 'Tech',
-    duration: '3-9 months',
-    level: 'Beginner to Intermediate',
-    languages: ['English', 'Hindi', 'Assamese'],
-    skills: ['SEO', 'Social Media', 'Content Marketing', 'Google Ads', 'Analytics', 'AI Tools'],
-    description: 'Master SEO, social media marketing, content marketing, Google Ads and analytics.',
-    fee: '6,000 - 10,000'
-  },
-  'communication-skills': {
-    id: 'communication-skills',
-    title: 'Communication Skills',
-    category: 'Soft Skills',
-    duration: '1.5-3 months',
-    level: 'All Levels',
-    languages: ['English', 'Hindi', 'Assamese', 'Bodo'],
-    skills: ['Public Speaking', 'Business Writing', 'Presentation', 'Email Writing', 'Team Collaboration'],
-    description: 'Develop effective verbal, written and presentation skills for professional environments.',
-    fee: '3,500 - 6,000'
-  },
-  'ui-ux-design': {
-    id: 'ui-ux-design',
-    title: 'UI/UX Design',
-    category: 'Tech',
-    duration: '3-6 months',
-    level: 'Beginner to Intermediate',
-    languages: ['English', 'Hindi'],
-    skills: ['Wireframing', 'Figma', 'User Research', 'Prototyping', 'UI Systems', 'AI-assisted Design'],
-    description: 'Create seamless user experiences through wireframing, prototyping, user research and UI systems.',
-    fee: '6,000 - 10,000'
-  }
-};
-
 const CourseDetailsPage = () => {
   const { courseId } = useParams<{ courseId: string }>();
   const [course, setCourse] = useState<Course | null>(null);
@@ -79,7 +30,7 @@ const CourseDetailsPage = () => {
       if (!courseId) return;
       
       try {
-        // Try to fetch from database first
+        // Query the database for this specific course
         const { data, error } = await supabase
           .from('courses')
           .select('*')
@@ -87,18 +38,12 @@ const CourseDetailsPage = () => {
           .single();
         
         if (error) {
-          // If there's a database error, try the fallback courses
-          console.log('Trying fallback courses...');
-          if (fallbackCourses[courseId]) {
-            setCourse(fallbackCourses[courseId]);
-          } else {
-            console.error('Error fetching course details:', error);
-            toast({
-              title: "Course not found",
-              description: "Could not find the requested course.",
-              variant: "destructive",
-            });
-          }
+          console.error('Error fetching course details:', error);
+          toast({
+            title: "Error loading course",
+            description: "Could not find the requested course. Please try again later.",
+            variant: "destructive",
+          });
           return;
         }
         
@@ -143,78 +88,68 @@ const CourseDetailsPage = () => {
 
   return (
     <Layout>
-      <div className="bg-muted/20 py-16">
-        <div className="container">
-          <div className="max-w-4xl mx-auto">
-            <div className="mb-8">
-              <Badge variant="outline" className="mb-4 bg-primary/10 text-primary">
-                {course.category}
-              </Badge>
-              <h1 className="text-3xl md:text-4xl font-bold mb-4">{course.title}</h1>
-              <p className="text-lg text-muted-foreground">{course.description}</p>
-            </div>
+      <div className="container py-16">
+        <div className="max-w-4xl mx-auto">
+          <h1 className="text-3xl md:text-4xl font-bold mb-6">{course.title}</h1>
+          
+          <div className="bg-white rounded-lg shadow-sm border p-6 mb-8">
+            <h2 className="text-xl font-semibold mb-4">Course Details</h2>
             
-            <div className="bg-card rounded-xl shadow-sm border overflow-hidden">
-              {/* Course Meta Info */}
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 bg-muted/30">
-                <div className="flex items-center gap-3">
-                  <Calendar className="h-10 w-10 p-2 rounded-full bg-primary/10 text-primary" />
-                  <div>
-                    <p className="text-sm text-muted-foreground">Duration</p>
-                    <p className="font-medium">{course.duration}</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-center gap-3">
-                  <Award className="h-10 w-10 p-2 rounded-full bg-primary/10 text-primary" />
-                  <div>
-                    <p className="text-sm text-muted-foreground">Level</p>
-                    <p className="font-medium">{course.level}</p>
-                  </div>
-                </div>
-                
-                <div className="flex items-center gap-3">
-                  <div className="h-10 w-10 p-2 rounded-full bg-primary/10 text-primary flex items-center justify-center">
-                    ₹
-                  </div>
-                  <div>
-                    <p className="text-sm text-muted-foreground">Fee (INR)</p>
-                    <p className="font-medium">₹{course.fee}</p>
-                  </div>
-                </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <h3 className="text-lg font-medium mb-3">Description</h3>
+                <p className="text-gray-700">{course.description || 'No description available.'}</p>
               </div>
               
-              {/* Course Details */}
-              <div className="p-6">
-                <div className="mb-8">
-                  <h2 className="text-xl font-semibold mb-4">Languages</h2>
-                  <div className="flex flex-wrap gap-2">
-                    {course.languages.map((language, index) => (
-                      <Badge key={index} variant="secondary">
-                        {language}
-                      </Badge>
-                    ))}
-                  </div>
+              <div className="space-y-4">
+                <div>
+                  <h3 className="text-lg font-medium mb-2">Category</h3>
+                  <p className="text-gray-700">{course.category}</p>
                 </div>
                 
-                <div className="mb-8">
-                  <h2 className="text-xl font-semibold mb-4">Skills You'll Learn</h2>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {course.skills.map((skill, index) => (
-                      <div key={index} className="flex items-center gap-2">
-                        <CheckCircle className="h-5 w-5 text-primary" />
-                        <span>{skill}</span>
-                      </div>
-                    ))}
-                  </div>
+                <div>
+                  <h3 className="text-lg font-medium mb-2">Level</h3>
+                  <p className="text-gray-700">{course.level}</p>
                 </div>
                 
-                <div className="mt-10">
-                  <Button size="lg" className="w-full sm:w-auto">
-                    Apply For This Course
-                  </Button>
+                <div>
+                  <h3 className="text-lg font-medium mb-2">Duration</h3>
+                  <p className="text-gray-700">{course.duration}</p>
+                </div>
+                
+                <div>
+                  <h3 className="text-lg font-medium mb-2">Fee</h3>
+                  <p className="text-gray-700">₹{course.fee}</p>
                 </div>
               </div>
+            </div>
+            
+            {course.skills && course.skills.length > 0 && (
+              <div className="mt-8">
+                <h3 className="text-lg font-medium mb-3">Skills You'll Learn</h3>
+                <ul className="list-disc list-inside space-y-1 text-gray-700">
+                  {course.skills.map((skill, index) => (
+                    <li key={index}>{skill}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            
+            {course.languages && course.languages.length > 0 && (
+              <div className="mt-6">
+                <h3 className="text-lg font-medium mb-3">Available Languages</h3>
+                <ul className="list-disc list-inside space-y-1 text-gray-700">
+                  {course.languages.map((language, index) => (
+                    <li key={index}>{language}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            
+            <div className="mt-8">
+              <Button size="lg">
+                Apply For This Course
+              </Button>
             </div>
           </div>
         </div>
